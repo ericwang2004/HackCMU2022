@@ -6,10 +6,11 @@ from player import Player
 from pygame import Rect
 import random
 import pygame
+from txtToMap import txtToInput
 #Where the game takes place
 #Contains the player, camera, tileMap, AssetManager, etc
 
-ASSETS = ['./asset/finger.jpeg', './asset/finger6.png', './asset/v bts.jpeg', './asset/bts.jpeg']
+ASSETS = ['./asset/grass.jpeg', './asset/wood.jpeg', './asset/water.jpeg', './asset/BLACK.jpeg']
 MAP_SIZE_WIDTH = 10
 MAP_SIZE_HEIGHT = 10
         
@@ -18,8 +19,9 @@ class Scene:
         self.camera = camera
         self.assetManager = AssetManager()
         #TODO DO THIS SHIT !!!!!!!!!!!!!!!!!!
-        self.maze = Maze([[random.randint(0, 3) for i in range(10)] for j in range(10)])
-        self.player = Player(2, 2, 'n', self.maze, self.camera.tile_camera_height)
+        tiles, adj_list = txtToInput()
+        self.maze = Maze(tiles, adj_list)
+        self.player = Player(2, 2, 'n', self.maze, self.camera.tile_camera_height, self.assetManager)
         
         for asset in ASSETS:
             self.assetManager.add_asset(asset)
@@ -38,13 +40,13 @@ class Scene:
                 asset_path = ASSETS[tile]
                 img = pygame.transform.scale(self.assetManager.retrieve(asset_path), (step_x, step_y))
                 display.blit(img, (step_x * x, step_y * y))
-        
+        self.player.draw(display, (step_x, step_y))
     
     def input(self, event):
-        print(self.player.x, self.player.y)
+       
         #handle input from user, pass this to the player
         if event.type == pygame.KEYDOWN:
-            print("EHJEJHHEHEHEHEHEHE")
+            print(self.player)
             if event.key == pygame.K_UP:
                 self.player.forward()
             elif event.key == pygame.K_LEFT:
@@ -52,9 +54,9 @@ class Scene:
             elif event.key == pygame.K_RIGHT:
                 self.player.right()
             elif event.key == pygame.K_DOWN:
-                pass
+                self.player.back()
             
     def update(self, delta_time):
         #handle background logic
         self.camera.center(self.player, 10, 10)
-        
+        self.player.update(delta_time)

@@ -18,7 +18,7 @@ MAGIC_CONNECT_COLOR = (100, 10, 200)
 
 class Editor:
     def __init__(self, rows, cols, width_pixels, height_pixels) -> None:
-        self.map = [[random.randint(0, 2) for i in range(cols)] for j in range(rows)]
+        self.map = [[random.randint(0, 1) for i in range(cols)] for j in range(rows)]
         self.rows = rows
         self.cols = cols
         self.width_pixels = width_pixels
@@ -104,9 +104,10 @@ class Editor:
         if self.connect_magic:
           self.draw_arrow_2(display, self.magic_connect_tile, pygame.mouse.get_pos())
                 
-    def save(self, path):
+    def save(self, display, path):
         NAMES = ['EMPTY', 'WALL', 'MAGIC']
         print(self.magic_connections)
+        display.save("map.png")
         with open(path, "w") as f:
             f.write(f'Dimensions:{(self.rows, self.cols)}')
             for y in range(self.rows):

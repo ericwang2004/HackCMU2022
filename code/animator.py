@@ -29,8 +29,10 @@ class Animator:
         step_x = self.sprite_sheet.get_width() / self.num_frames
         step_y = self.sprite_sheet.get_height() / self.num_anis
         
+      #  print(self.sprite_sheet.get_width(), self.sprite_sheet.get_height(), self.num_frames, self.num_anis, self.current_animation, self.current_frame)
+        
         rect = pygame.Rect((step_x * self.current_frame, step_y * self.current_animation, 
-                            step_x * self.current_frame + step_x, step_y * self.current_animation + step_y))
-        image = pygame.Surface(rect.size).convert()
-        image.blit(self.sheet, (0, 0), rect)
+                            step_x, step_y))
+        image = pygame.Surface(rect.size).convert_alpha()
+        image.blit(self.sprite_sheet, (0, 0), rect)
         return image

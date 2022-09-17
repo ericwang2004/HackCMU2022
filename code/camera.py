@@ -14,18 +14,19 @@ class Camera:
     def get_screen_dimensions(self):
         return (self.tile_camera_width * self.tile_pixel_dimensions, self.tile_camera_height * self.tile_pixel_dimensions)
     
-    def center(self, player_pos, map_max_x, map_max_y):
+    def center(self, player, map_max_x, map_max_y):
         #camera position is the top left of the camera, (0, 0)
         #new_pos is what we want the center of the camera to be
-        self.pos.y = player_pos.y - self.tile_camera_height / 2.0
+       # self.pos.y = player_pos.y - self.tile_camera_height / 2.0
         
         #Get the clamped integer coordinate (tile coordinate) of the player's x position, then add half a tile to it
         #Center ourselves onto that by subtracting the cam width / 2
-        self.pos.x = (int(player_pos.x) + 0.5) - self.tile_camera_width / 2.0
+      #  self.pos.x = player_pos.x - self.tile_camera_height / 2.0
         
         #Next clamp the camera such that it doesn't go outside the bounds of the map
-        self.pos.x = clamp(self.pos.x, 0, map_max_x - self.tile_camera_width)
-        self.pos.y = clamp(self.pos.y, 0, map_max_y - self.tile_camera_height)
+        #self.pos.x = clamp(self.pos.x, 0, map_max_x - self.tile_camera_width)
+        #self.pos.y = clamp(self.pos.y, 0, map_max_y - self.tile_camera_height)
+        self.pos = Vector(player.cx, player.cy)
 
     def render(self, display, maze):
         

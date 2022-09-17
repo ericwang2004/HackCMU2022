@@ -12,7 +12,7 @@ SAVE_PATH = './map.txt'
 
 WIDTH = 500
 HEIGHT = 500
-editor = Editor(5, 5, WIDTH, HEIGHT)
+editor = Editor(500, 500, WIDTH, HEIGHT)
 
 #setup pygame
 pygame.init()
@@ -26,7 +26,7 @@ while True:
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
-            editor.save(SAVE_PATH)
+            editor.save(display, SAVE_PATH)
             sys.exit()
    
         #HANDLE KEY, MOUSE INPUT  

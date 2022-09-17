@@ -8,7 +8,7 @@ class AssetManager:
         pass
     
     def add_asset(self, asset_path):
-        self.assets[asset_path] = pygame.image.load(asset_path)
+        self.assets[asset_path] = pygame.image.load(asset_path).convert_alpha()
         
     def retrieve(self, asset_path):
         if not self.contains_asset(asset_path):

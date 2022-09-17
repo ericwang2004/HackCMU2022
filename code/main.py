@@ -8,21 +8,23 @@ import time
  
 
 #define constants and camera
-TILE__HEIGHT_CAMERA = 10
-TILE_PIXEL_DIMENSIONS = 75
+TILE__HEIGHT_CAMERA = 5
+TILE_PIXEL_DIMENSIONS = 150
 FPS = 15
-
 #create the camera
 camera = Camera(TILE__HEIGHT_CAMERA, TILE__HEIGHT_CAMERA, TILE_PIXEL_DIMENSIONS, 0, 0)
-#create the scene
-scene = Scene(camera)
 
-#setup pygame
 pygame.init()
 clock = pygame.time.Clock()
 displaysurface = pygame.display.set_mode(camera.get_screen_dimensions())
 pygame.display.set_caption("💀💀")
 pygame.display.flip()
+
+#create the scene
+scene = Scene(camera)
+
+#setup pygame
+
 
 now = 0
 after = time.time()
@@ -38,7 +40,7 @@ while True:
     
 
     #FILL COLOR
-    displaysurface.fill((0,0,0))
+    displaysurface.fill((255,0,0))
     
     #UPDATE THE GAME HERE
     now = time.time()
