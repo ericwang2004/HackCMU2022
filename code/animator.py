@@ -25,7 +25,7 @@ class Animator:
             sys.exit()
         self.current_animation = animation_index
     
-    def get_frame(self, display):
+    def get_frame(self):
         step_x = self.sprite_sheet.get_width() / self.num_frames
         step_y = self.sprite_sheet.get_height() / self.num_anis
         
