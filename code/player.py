@@ -57,3 +57,5 @@ class Player:
 		else: # self.dir == "w"
 			self.dir = "n"
 		return
+
+	def view(self):
