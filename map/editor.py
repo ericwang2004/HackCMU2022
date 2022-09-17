@@ -107,7 +107,7 @@ class Editor:
     def save(self, display, path):
         NAMES = ['EMPTY', 'WALL', 'MAGIC']
         print(self.magic_connections)
-        display.save("map.png")
+        pygame.image.save(display, "map.png")
         with open(path, "w") as f:
             f.write(f'Dimensions:{(self.rows, self.cols)}')
             for y in range(self.rows):

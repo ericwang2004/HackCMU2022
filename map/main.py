@@ -25,8 +25,8 @@ pygame.display.flip()
 while True:
     for event in pygame.event.get():
         if event.type == QUIT:
+            editor.save(displaysurface, SAVE_PATH)
             pygame.quit()
-            editor.save(display, SAVE_PATH)
             sys.exit()
    
         #HANDLE KEY, MOUSE INPUT  

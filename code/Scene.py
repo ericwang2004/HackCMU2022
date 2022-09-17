@@ -25,6 +25,9 @@ class Scene:
         
         for asset in ASSETS:
             self.assetManager.add_asset(asset)
+        self.assetManager.add_asset("./map.png")
+            
+        self.display_map = False
     def render(self, display):
         tiles = self.player.view()
         
@@ -40,8 +43,13 @@ class Scene:
                 asset_path = ASSETS[tile]
                 img = pygame.transform.scale(self.assetManager.retrieve(asset_path), (step_x, step_y))
                 display.blit(img, (step_x * x, step_y * y))
+                
         self.player.draw(display, (step_x, step_y))
-    
+
+        if self.display_map:
+            img = pygame.transform.scale(self.assetManager.retrieve('./map.png'), screen_size)
+            display.blit(img, (0, 0))
+            
     def input(self, event):
        
         #handle input from user, pass this to the player
@@ -55,6 +63,8 @@ class Scene:
                 self.player.right()
             elif event.key == pygame.K_DOWN:
                 self.player.back()
+            elif event.key == pygame.K_m:
+                self.display_map = not self.display_map
             
     def update(self, delta_time):
         #handle background logic
