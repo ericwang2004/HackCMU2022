@@ -8,12 +8,12 @@ import time
  
 
 #define constants and camera
-TILE__HEIGHT_CAMERA = 5
-TILE_PIXEL_DIMENSIONS = 100
+TILE__HEIGHT_CAMERA = 10
+TILE_PIXEL_DIMENSIONS = 75
 FPS = 15
 
 #create the camera
-camera = Camera(TILE__HEIGHT_CAMERA, 3, TILE_PIXEL_DIMENSIONS, 0, 0)
+camera = Camera(TILE__HEIGHT_CAMERA, TILE__HEIGHT_CAMERA, TILE_PIXEL_DIMENSIONS, 0, 0)
 #create the scene
 scene = Scene(camera)
 
@@ -34,7 +34,7 @@ while True:
             sys.exit()
           
         #HANDLE KEY, MOUSE INPUT  
-        scene.input()
+        scene.input(event)
     
 
     #FILL COLOR
@@ -47,7 +47,7 @@ while True:
     scene.update(delta)
     
     #RENDER HERE
-    scene.render()
+    scene.render(displaysurface)
     
     pygame.display.update()
     clock.tick(FPS)
