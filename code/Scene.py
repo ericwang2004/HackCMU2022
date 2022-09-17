@@ -9,7 +9,7 @@ import pygame
 #Where the game takes place
 #Contains the player, camera, tileMap, AssetManager, etc
 
-ASSETS = ['../asset/finger.jpeg', '../asset/finger.jpeg', '../asset/finger.jpeg']
+ASSETS = ['./asset/finger.jpeg', './asset/finger6.png', './asset/v bts.jpeg', './asset/bts.jpeg']
 MAP_SIZE_WIDTH = 10
 MAP_SIZE_HEIGHT = 10
         
@@ -19,7 +19,7 @@ class Scene:
         self.assetManager = AssetManager()
         #TODO DO THIS SHIT !!!!!!!!!!!!!!!!!!
         self.maze = Maze([[random.randint(0, 3) for i in range(10)] for j in range(10)])
-        self.player = Player(1, 1, 'n', self.maze, self.camera)
+        self.player = Player(2, 2, 'n', self.maze, self.camera.tile_camera_height)
         
         for asset in ASSETS:
             self.assetManager.add_asset(asset)
@@ -35,24 +35,26 @@ class Scene:
         for y in range(rows):
             for x in range(cols):
                 tile = tiles[y][x]
-                asset_path = tile.get_typ()
-                display.blit(self.asset_manager.retrieve(asset_path), (step_x * x, step_y * y), 
-                             area=Rect(step_x * x, step_y * y, step_x, step_y))
+                asset_path = ASSETS[tile]
+                img = pygame.transform.scale(self.assetManager.retrieve(asset_path), (step_x, step_y))
+                display.blit(img, (step_x * x, step_y * y))
         
     
     def input(self, event):
+        print(self.player.x, self.player.y)
         #handle input from user, pass this to the player
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_DOWN:
+            print("EHJEJHHEHEHEHEHEHE")
+            if event.key == pygame.K_UP:
                 self.player.forward()
-            elif event.key == pygame.KEY_LEFT:
+            elif event.key == pygame.K_LEFT:
                 self.player.left()
-            elif event.key == pygame.KEY_RIGHT:
+            elif event.key == pygame.K_RIGHT:
                 self.player.right()
-            elif event.key == pygame.KEY_UP:
+            elif event.key == pygame.K_DOWN:
                 pass
             
     def update(self, delta_time):
         #handle background logic
-        self.camera.center(self.player)
-        pass
+        self.camera.center(self.player, 10, 10)
+        
