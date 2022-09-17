@@ -10,6 +10,8 @@ class AssetManager:
     def add_asset(self, asset_path):
         self.assets[asset_path] = pygame.image.load(asset_path)
     def retrieve(self, asset_path):
+        if not self.contains_asset(asset_path):
+            self.add_asset(asset_path)
         return self.assets[asset_path]
     def contains_asset(self, asset_path):
         return self.assets.__contains__(asset_path)
