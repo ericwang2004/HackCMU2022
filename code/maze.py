@@ -15,10 +15,10 @@ def intArrayIntoCell(input_array):
     return cell_array
 
 class Maze:
-    def __init__(self, input_array):
-        self.input_array = input_array
-        self.cell_array = intArrayIntoCell(input_array)
-    
-    def get_cell_type(self, x, y, shiftx=0, shifty=0):
-        return self.cell_array[x + shiftx][y + shifty].get_typ()
+	def __init__(self, input_array, magic_graph):
+		self.input_array = input_array
+		self.cell_array = intArrayIntoCell(input_array)
+		self.magic_graph = magic_graph # dictionary from ordered pairs to ordered pairs; only magic cells
+	def get_cell_type(self, x, y, shiftx=0, shifty=0):
+		return self.cell_array[x + shiftx][y + shifty].get_typ()
 
