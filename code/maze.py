@@ -22,5 +22,5 @@ class Maze:
         self.cell_array = intArrayIntoCell(input_array)
     
     def get_cell_type(self, x, y, input_array):
-        return input_array[x][y]
-        # should I use return cell_array[x][y].typ instead
+        return self.cell_array[x][y].typ
+

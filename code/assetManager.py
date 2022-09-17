@@ -1,4 +1,4 @@
-import pygame 
+import pygame
 #handles loading assets
 #only loads images once for them to be used throughout the entire program during the duration of its life
 
