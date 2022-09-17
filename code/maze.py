@@ -20,5 +20,5 @@ class Maze:
         self.cell_array = intArrayIntoCell(input_array)
     
     def get_cell_type(self, x, y, shiftx=0, shifty=0):
-        return self.cell_array[x + shiftx][y + shifty].typ
+        return self.cell_array[x + shiftx][y + shifty].get_typ()
 
