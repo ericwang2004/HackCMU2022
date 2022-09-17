@@ -1,0 +1,42 @@
+class Cell
+	arguments x, y, typ // coordinates and type of cell
+		typ = 0 ==> empty
+		typ = 1 ==> wall
+		typ = 2 ==> magic
+
+	// getters
+	def get_x
+		returns x coordinate
+	def get_y
+		returns y coordinate
+	def get_typ
+		returns the number corresponding to the type
+
+class Maze
+	arguments xmax, ymax, input_array  // dimensions of the map; input_array is a two-dimensional array of integers in the set {0, 1, 2}, later to be made into an array of Cells, which we call cell_array
+	attributes xmax, ymax, cell_array
+
+	// boundary of the maze will be marked by a border of wall cells
+	// outer walls occupy coordinates (0, _), (_, 0), (xmax+1, _), (_, ymax+1)
+	
+	def get_cell_type(x ,y)
+		returns either 0, 1, 2 depending on the type of cell at position (x, y)
+	
+
+class Player
+	arguments x0, y0, dir0, camera_width, camera_height
+	attributes x, y, dir, camera_width, camera_height
+		// coordinates, direction (orientation), and camera dimensions
+	
+	// getters
+	def get_x
+	def get_y
+
+	// the following denote movement operations, respecting maze boundaries and wall types
+	def forward
+	def backward
+	def left
+	def right
+
+	def view
+		returns a (camera_width) by (camera_height) array of Cells centered around the player 
