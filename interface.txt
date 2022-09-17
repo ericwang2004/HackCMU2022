@@ -11,7 +11,7 @@ class Cell
 		returns y coordinate
 	def get_typ
 		returns the number corresponding to the type
-	arguements: pixel coordinate (vector), pygame display
+	arguements: pixel_cord, display, asset_manager
 	def draw
 
 class Maze

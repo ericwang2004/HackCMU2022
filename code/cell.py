@@ -1,4 +1,9 @@
 # cell.py
+EMPTY = 0 
+WALL = 1
+MAGIC = 2
+
+ASSETS = ['../asset/finger.jpeg', '../asset/finger.jpeg', '../asset/finger.jpeg']
 
 class Cell:
 	def __init__(self, x, y, typ):
@@ -18,3 +23,9 @@ class Cell:
 		return self.y
 	def get_typ(self):
 		return self.typ
+	def draw(self, pixel_cord, display, asset_manager):
+        asset_path = ASSETS[self.typ]
+		if not asset_manager.contains_asset(asset_path):
+			asset_manager.add_asset(asset_path, asset_path)
+   
+		display.blit(asset_manager.retrieve(asset_path), (pixel_cord.x, pixel_cord.y))
