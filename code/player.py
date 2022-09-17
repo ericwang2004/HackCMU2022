@@ -1,5 +1,6 @@
 # player.py
 
+from tkinter import X
 from camera import Camera
 from maze import Maze
 
@@ -69,49 +70,54 @@ class Player:
 		# 2 = Magic
 		# 3 = Invisible
 		view_array = []
-		rows, cols = self.camera.title_camera_height, self.camera.title_camera_width
+		rows, cols = self.camera.tile_camera_height, self.camera.tile_camera_width
 		for row in range(rows):
 			view_array.append([3]*cols)
 		
 		# start in player position
-		playerX, playerY = self.camera.title_camera_height // 2, self.camera.title_camera_width // 2
+		playerX, playerY = self.camera.tile_camera_height // 2, self.camera.tile_camera_width // 2
 		view_array[playerX][playerY] = 0
 
 		# step 1: shoot rays in all four directions
 		in_view_0 = []
-		in_view_1 = set()
 		for x in range(playerX - 1, -1, -1):
 			if self.maze.get_cell_type(x, playerY, self.camera.pos.x, self.camera.pos.y) != 1:
 				in_view_0.append((x, playerY)) 
 			else:
+				in_view_0.append((x, playerY)) 
 				break 
-		for x in range(playerX + 1, self.camera.title_camera_height):
+		for x in range(playerX + 1, self.camera.tile_camera_height):
 			if self.maze.get_cell_type(x, playerY, self.camera.pos.x, self.camera.pos.y) != 1:
 				in_view_0.append((x, playerY)) 
 			else:
+				in_view_0.append((x, playerY)) 
 				break 
 		for y in range(playerY - 1, -1, -1):
 			if self.maze.get_cell_type(playerX, y, self.camera.pos.x, self.camera.pos.y) != 1:
 				in_view_0.append((playerX, y)) 
 			else:
+				in_view_0.append((playerX, y)) 
 				break 
-		for y in range(playerY + 1, self.camera.title_camera_width):
+		for y in range(playerY + 1, self.camera.tile_camera_width):
 			if self.maze.get_cell_type(playerX, y, self.camera.pos.x, self.camera.pos.y) != 1:
 				in_view_0.append((playerX, y)) 
 			else:
+				in_view_0.append((playerX, y))  
 				break  
 		
 		# step 2: lighting
+		in_view_1 = set()
 		for x, y in in_view_0:
 			in_view_1.add((x, y))
-			if x + 1 < self.camera.title_camera_height:
-				in_view_1.add((x + 1, y))
-			if x - 1 >= 0:
-				in_view_1.add((x - 1, y))
-			if y + 1 < self.camera.title_camera_width:
-				in_view_1.add((x, y + 1))
-			if y - 1 >= 0:
-				in_view_1.add((x, y - 1))
+			if self.maze.get_cell_type(x, y, self.camera.pos.x, self.camera.pos.y) != 1:
+				if x + 1 < self.camera.tile_camera_height:
+					in_view_1.add((x + 1, y))
+				if x - 1 >= 0:
+					in_view_1.add((x - 1, y))
+				if y + 1 < self.camera.tile_camera_width:
+					in_view_1.add((x, y + 1))
+				if y - 1 >= 0:
+					in_view_1.add((x, y - 1))
 
 		# update view array
 		for x, y in in_view_1:
