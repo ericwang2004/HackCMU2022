@@ -28,7 +28,7 @@ class Player:
 		else: # orientation is "w"
 			newy -= 1
 		# update player's position depending on the nature of the cell about to be entered
-		cell_type = self.maze.get_cell_type(x, y)
+		cell_type = self.maze.get_cell_type(self.x, self.y)
 		if cell_type == 1: # if the cell type is a wall, keep x and y the same since we can't run into a wall
 			return
 		elif cell_type == 0: # if the cell is empty, enter it by updating x and y to the new coordinates

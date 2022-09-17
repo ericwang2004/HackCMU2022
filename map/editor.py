@@ -38,6 +38,9 @@ class Editor:
             
             if event.button == 1: #left click
                 if clamped[0] >= 0 and clamped[0] < self.cols and clamped[1] >= 0 and clamped[1] < self.rows:
+                    if self.map[clamped[1]][clamped[0]] == MAGIC and self.magic_connections.__contains__(clamped):
+                        self.magic_connections.pop(clamped)
+                        
                     self.map[clamped[1]][clamped[0]] = (self.map[clamped[1]][clamped[0]] + 1) % 3
                     
             elif event.button == 3:
@@ -105,6 +108,7 @@ class Editor:
         NAMES = ['EMPTY', 'WALL', 'MAGIC']
         print(self.magic_connections)
         with open(path, "w") as f:
+            f.write(f'Dimensions:{(self.rows, self.cols)}')
             for y in range(self.rows):
                 for x in range(self.cols):
                     typ = self.map[y][x]

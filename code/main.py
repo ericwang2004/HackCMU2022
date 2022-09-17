@@ -13,7 +13,7 @@ TILE_PIXEL_DIMENSIONS = 100
 FPS = 15
 
 #create the camera
-camera = Camera(TILE__HEIGHT_CAMERA, TILE_PIXEL_DIMENSIONS)
+camera = Camera(TILE__HEIGHT_CAMERA, 3, TILE_PIXEL_DIMENSIONS, 0, 0)
 #create the scene
 scene = Scene(camera)
 
