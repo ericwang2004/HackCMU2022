@@ -13,7 +13,7 @@ def intArrayIntoCell(input_array):
         for j in range(cols):
             cell_array[i][j] = Cell(i, j, input_array[i][j])
     return cell_array
-
+# comment
 class Maze:
 	def __init__(self, input_array, magic_graph):
 		self.input_array = input_array
