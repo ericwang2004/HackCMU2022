@@ -18,7 +18,7 @@ class Scene:
     def input(self):
         #handle input from user, pass this to the player
         pass
-    def update(self):
+    def update(self, delta_time):
         #handle background logic
         self.camera.center(self.player)
         pass

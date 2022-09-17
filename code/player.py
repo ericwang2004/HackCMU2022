@@ -36,8 +36,7 @@ class Player:
 			self.y = newy
 			return
 		else: # if the cell is magic, teleport the player to the cell linked to this one TODO
-			self.x = newx 
-			self.y = newy
+			self.x, self.y = self.maze.magic_graph[(newx, newy)]
 			return
 	# the other two movement functions (left and right) only modify the orientation of the player
 	# only forward modifies the position, as mentioned above
@@ -103,7 +102,7 @@ class Player:
 			else:
 				break  
 		
-		# step 2: lighting
+		# step 2: lighting (one iteration of flood fill)
 		for x, y in in_view_0:
 			in_view_1.add((x, y))
 			if x + 1 < self.clength:
