@@ -18,6 +18,7 @@ class Player:
 		# update self.cx and self.cy
 		self.cx = self.x - self.clength // 2
 		self.cy = self.y - self.clength // 2
+		return
 	# this is the only movement function that modifies the position of the player, respecting orientation
 	def forward(self):
 		newx = self.x
