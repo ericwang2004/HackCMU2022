@@ -7,7 +7,7 @@ import pygame
 DIRECTION_TO_ANIMATION = {'n': 3, 's': 0, 'e': 2, 'w': 1}
 
 class Player:
-    def __init__(self, x0, y0, dir0, maze, camera_length, asset_manager):
+    def __init__(self, x0, y0, dir0, maze, camera_length, asset_manager, endx, endy):
         # x0, y0 are the initial coordinates of the player
         # dir0 is the initial orientation of the player {"n", "s", "e", "w"}
         self.x = x0
@@ -17,6 +17,8 @@ class Player:
         self.clength = camera_length # view looks like a square
         self.cx = self.x - self.clength // 2
         self.cy = self.y - self.clength // 2
+				self.endx = endx
+				self.endy = endy
 
         sprite_sheet = asset_manager.retrieve('./asset/aubreySheet.png')
         self.animator = Animator(sprite_sheet, 4, 3, 100)
@@ -31,9 +33,11 @@ class Player:
         
     def update_corner(self):
         # update self.cx and self.cy
+				if self.x == self.endx and self.y == self.endy:
+						return -1
         self.cx = self.x - self.clength // 2
         self.cy = self.y - self.clength // 2
-        return
+        return 0
     # this is the only movement function that modifies the position of the player, respecting orientation
     def forward(self):
         newx = self.x
@@ -49,8 +53,7 @@ class Player:
         elif cell_type == 2: # if the cell is magic, teleport the player to the cell linked to this one TODO
             self.x, self.y = self.maze.magic_graph[(newx, newy)]
         # if the cell type is a wall, keep x and y the same since we can't run into a wall
-        self.update_corner()
-        return
+        return self.update_corner()
     # the other two movement functions (left and right) only modify the orientation of the player
     # only forward modifies the position, as mentioned above
     # note: turning backwards can be achieved by two lefts or two rights composed
@@ -68,8 +71,7 @@ class Player:
         elif cell_type == 2: # if the cell is magic, teleport the player to the cell linked to this one TODO
             self.x, self.y = self.maze.magic_graph[(newx, newy)]
         # if the cell type is a wall, keep x and y the same since we can't run into a wall
-        self.update_corner()
-        return
+				return self.update_corner()
     def right(self):
         newx = self.x
         newy = self.y
@@ -84,9 +86,7 @@ class Player:
         elif cell_type == 2: # if the cell is magic, teleport the player to the cell linked to this one TODO
             self.x, self.y = self.maze.magic_graph[(newx, newy)]
         # if the cell type is a wall, keep x and y the same since we can't run into a wall
-        self.update_corner()
-        return
-
+        return self.update_corner()
     def back(self):
         newx = self.x
         newy = self.y
@@ -101,8 +101,8 @@ class Player:
         elif cell_type == 2: # if the cell is magic, teleport the player to the cell linked to this one TODO
             self.x, self.y = self.maze.magic_graph[(newx, newy)]
         # if the cell type is a wall, keep x and y the same since we can't run into a wall
-        self.update_corner()
-        return
+        return self.update_corner()
+
     def view(self):
         # initialize array 
         # 0 = Empty
