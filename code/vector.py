@@ -28,3 +28,4 @@ class Vector:
     def int_clamp(self):
         self.x = int(self.x)
         self.y = int(self.y)
+        
