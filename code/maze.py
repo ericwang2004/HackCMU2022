@@ -15,12 +15,10 @@ def intArrayIntoCell(input_array):
     return cell_array
 
 class Maze:
-    def __init__(self, x_max, y_max, input_array):
-        self.x_max = x_max
-        self.y_max = y_max
+    def __init__(self, input_array):
         self.input_array = input_array
         self.cell_array = intArrayIntoCell(input_array)
     
-    def get_cell_type(self, x, y, input_array):
-        return self.cell_array[x][y].typ
+    def get_cell_type(self, x, y, shiftx=0, shifty=0):
+        return self.cell_array[x + shiftx][y + shifty].typ
 

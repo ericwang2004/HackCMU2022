@@ -1,13 +1,17 @@
 # player.py
 
+from camera import Camera
+from maze import Maze
+
 class Player:
-	def __init__(self, x0, y0, dir0, maze):
+	def __init__(self, x0, y0, dir0, maze, camera):
 		# x0, y0 are the initial coordinates of the player
 		# dir0 is the initial orientation of the player {"n", "s", "e", "w"}
 		self.x = x0
 		self.y = y0
 		self.dir = dir0
 		self.maze = maze # stores the maze representation in which the player is placed
+		self.camera = camera
 
 	# this is the only movement function that modifies the position of the player, respecting orientation
 	def forward(self):
@@ -15,13 +19,13 @@ class Player:
 		newy = self.y
 		# no change is made to the player's orientation
 		if self.dir == "n": # determine the *potential* new position (obviously, if it's a wall, we can't go there)
-			newy += 1
-		elif self.dir == "s":
-			newy -= 1
-		elif self.dir == "e":
-			newx += 1
-		else: # orientation is "w"
 			newx -= 1
+		elif self.dir == "s":
+			newx += 1
+		elif self.dir == "e":
+			newy += 1
+		else: # orientation is "w"
+			newy -= 1
 		# update player's position depending on the nature of the cell about to be entered
 		cell_type = self.maze.get_cell_type(x, y)
 		if cell_type == 1: # if the cell type is a wall, keep x and y the same since we can't run into a wall
@@ -59,3 +63,59 @@ class Player:
 		return
 
 	def view(self):
+		# initialize array 
+		# 0 = Empty
+		# 1 = Wall
+		# 2 = Magic
+		# 3 = Invisible
+		view_array = []
+		rows, cols = self.camera.title_camera_height, self.camera.title_camera_width
+		for row in range(rows):
+			view_array.append([3]*cols)
+		
+		# start in player position
+		playerX, playerY = self.camera.title_camera_height // 2, self.camera.title_camera_width // 2
+		view_array[playerX][playerY] = 0
+
+		# step 1: shoot rays in all four directions
+		in_view_0 = []
+		in_view_1 = set()
+		for x in range(playerX - 1, -1, -1):
+			if self.maze.get_cell_type(x, playerY, self.camera.pos.x, self.camera.pos.y) != 1:
+				in_view_0.append((x, playerY)) 
+			else:
+				break 
+		for x in range(playerX + 1, self.camera.title_camera_height):
+			if self.maze.get_cell_type(x, playerY, self.camera.pos.x, self.camera.pos.y) != 1:
+				in_view_0.append((x, playerY)) 
+			else:
+				break 
+		for y in range(playerY - 1, -1, -1):
+			if self.maze.get_cell_type(playerX, y, self.camera.pos.x, self.camera.pos.y) != 1:
+				in_view_0.append((playerX, y)) 
+			else:
+				break 
+		for y in range(playerY + 1, self.camera.title_camera_width):
+			if self.maze.get_cell_type(playerX, y, self.camera.pos.x, self.camera.pos.y) != 1:
+				in_view_0.append((playerX, y)) 
+			else:
+				break  
+		
+		# step 2: lighting
+		for x, y in in_view_0:
+			in_view_1.add((x, y))
+			if x + 1 < self.camera.title_camera_height:
+				in_view_1.add((x + 1, y))
+			if x - 1 >= 0:
+				in_view_1.add((x - 1, y))
+			if y + 1 < self.camera.title_camera_width:
+				in_view_1.add((x, y + 1))
+			if y - 1 >= 0:
+				in_view_1.add((x, y - 1))
+
+		# update view array
+		for x, y in in_view_1:
+			view_array[x][y] = self.maze.get_cell_type(x, y, self.camera.pos.x, self.camera.pos.y)
+		return view_array
+
+
