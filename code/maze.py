@@ -1,5 +1,7 @@
 # implement maze
 
+from cell import Cell
+
 def intArrayIntoCell(input_array):
     rows, cols = len(input_array), len(input_array[0])
     # create empty cell array of same dimensions
