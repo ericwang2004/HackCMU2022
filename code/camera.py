@@ -1,5 +1,6 @@
 
 from vector import Vector
+
 TILE_CAMERA_WIDTH = 3
 
 def clamp(val, min_, max_):
@@ -8,6 +9,7 @@ def clamp(val, min_, max_):
 class Camera:
     def __init__(self, tile_camera_height, tile_pixel_dimensions) -> None:
         self.tile_camera_height = tile_camera_height
+        self.title_camera_width = TILE_CAMERA_WIDTH
         self.tile_pixel_dimensions = tile_pixel_dimensions
         self.pos = Vector(0, 0)
         
