@@ -2,8 +2,8 @@
 import pygame
 from pygame.locals import *
 import sys
-from code.camera import Camera
-from code.Scene import Scene
+from camera import Camera
+from Scene import Scene
  
 
 #define constants and camera
