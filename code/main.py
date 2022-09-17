@@ -4,6 +4,7 @@ from pygame.locals import *
 import sys
 from camera import Camera
 from Scene import Scene
+import time
  
 
 #define constants and camera
@@ -23,6 +24,8 @@ displaysurface = pygame.display.set_mode(camera.get_screen_dimensions())
 pygame.display.set_caption("💀💀")
 pygame.display.flip()
 
+now = 0
+after = time.time()
 #gameLoop
 while True:
     for event in pygame.event.get():
@@ -32,11 +35,17 @@ while True:
           
         #HANDLE KEY, MOUSE INPUT  
         scene.input()
-     
+    
+
     #FILL COLOR
     displaysurface.fill((0,0,0))
+    
     #UPDATE THE GAME HERE
-    scene.update()
+    now = time.time()
+    delta = now - after
+    after = time.time()
+    scene.update(delta)
+    
     #RENDER HERE
     scene.render()
     

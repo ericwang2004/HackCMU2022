@@ -103,6 +103,7 @@ class Editor:
                 
     def save(self, path):
         NAMES = ['EMPTY', 'WALL', 'MAGIC']
+        print(self.magic_connections)
         with open(path, "w") as f:
             for y in range(self.rows):
                 for x in range(self.cols):
@@ -110,9 +111,19 @@ class Editor:
                     f.write(f"({x}, {y}): {NAMES[typ]}")
                     
                     if typ == MAGIC:
-                        if not self.magic_connections.__contains__(x, y):
+                        if not self.magic_connections.__contains__((x, y)) and not (x, y) in self.magic_connections.values():
                             print("ERROR: Must have each magic tile connected to another!")
                             sys.exit()
-                            
-                        f.write(f": {self.magic_connections[(x, y)]}")
+                        
+                        tile = None
+                        if self.magic_connections.__contains__((x, y)):
+                            tile = self.magic_connections[(x, y)] 
+                
+                        if not tile:
+                            for (a, b) in self.magic_connections.items():
+                                if b == (x, y):
+                                    tile = a
+                                    break
+                                
+                        f.write(f": {tile}")
                     f.write("\n")
