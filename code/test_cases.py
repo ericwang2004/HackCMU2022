@@ -18,6 +18,5 @@ input_array2 = [[1, 1, 1, 1, 1],
                 [1, 1, 1, 1, 1]]
 
 maze = Maze(input_array1)
-camera = Camera(3, 1)
-player = Player(2, 2, "n", maze, camera)
+player = Player(2, 2, "n", maze, 3)
 print(player.view())
