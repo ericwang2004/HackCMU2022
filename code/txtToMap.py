@@ -21,16 +21,27 @@ def txtToInput():
     input_array = []
     for row in range(rows):
         input_array.append([0]*cols)
+    
+    adj_list = {}
 
     for i in range(1, len(lines)):
-        x, y = getTuple(lines[i])
-        if 'EMPTY' in lines[i]:
+        line = lines[i]
+        x, y = getTuple(line)
+        if 'EMPTY' in line:
             typ = 0
-        elif 'WALL' in lines[i]:
+        elif 'WALL' in line:
             typ = 1
-        elif 'MAGIC' in lines[i]:
+        elif 'MAGIC' in line:
+            index = line.find('MAGIC')
+            line = line[index:] 
+            x1, y1 = getTuple(line)
+            adj_list[(y, x)] = (y1, x1)
             typ = 2
         input_array[y][x] = typ
 
     f.close()
-    return input_array
+    return input_array, adj_list
+
+input, adj = txtToInput()
+print(input)
+print(adj)
