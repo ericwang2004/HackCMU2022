@@ -11,6 +11,8 @@ class Cell
 		returns y coordinate
 	def get_typ
 		returns the number corresponding to the type
+	arguements: pixel coordinate (vector), pygame display
+	def draw
 
 class Maze
 	arguments xmax, ymax, input_array  // dimensions of the map; input_array is a two-dimensional array of integers in the set {0, 1, 2}, later to be made into an array of Cells, which we call cell_array

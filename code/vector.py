@@ -24,3 +24,7 @@ class Vector:
         
     def mult_new(self, scalar):
         return Vector(self.x * scalar, self.y * scalar)
+    
+    def int_clamp(self):
+        self.x = int(self.x)
+        self.y = int(self.y)

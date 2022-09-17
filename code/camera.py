@@ -27,18 +27,33 @@ class Camera:
         self.pos.x = clamp(self.pos.x, 0, map_max_x - TILE_CAMERA_WIDTH)
         self.pos.y = clamp(self.pos.y, 0, map_max_y - self.tile_camera_height)
 
+    def render(self, display, maze):
         
+        for y in range(maze.maxY):
+            for x in range(maze.maxX):
+                #get the coordinate from the top left of the camera + (x, y)
+                p = self.pos.add_new(Vector(x, y))
+                #get the pixel coordinate
+                pixel_cord = self.to_pixel_cord(p)
+                #clamp the coordinate down to an integer coordinate such that we can sample the maze array
+                p.int_clamp()
+                #sample the array to get the cell object, then call draw on that cell object 
+                maze[p.y, p.x].draw(pixel_cord, display)
+                
+                #NOTE::: Since positive direction is down in array coordinates,
+                #the positive y direction is down in world coordinates
+                
     def to_pixel_cord(self, pos):
         #dont draw anything outside of the screen
-        if pos.x <= self.pos.x - 1 or pos.x >= self.pos.x + TILE_CAMERA_WIDTH or pos.y <= self.pos.y - 1 or pos.y >= self.pos.y + self.tile_camera_height:
-            return None
+        #if pos.x <= self.pos.x - 1 or pos.x >= self.pos.x + TILE_CAMERA_WIDTH or pos.y <= self.pos.y - 1 or pos.y >= self.pos.y + self.tile_camera_height:
+         #   return None
         
         #relative cord to the camera's position
-        relative_cord = pos.sub(self.pos) 
+        relative_cord = pos.sub_new(self.pos) 
         #proportion cord from range [0, 1]
         proportion_cord = Vector(relative_cord.x / TILE_CAMERA_WIDTH, relative_cord.y / self.tile_camera_height)
         
         #multiply proportion cordinates by the screen dimensions for screen space coordinates
         screen_size = self.get_screen_dimensions()
-        pixel_cord = Vector(proportion_cord.x * screen_size[0], proportion_cord.y * screen_size[1])
+        pixel_cord = Vector(proportion_cord.x * screen_size[0], proportion_cord.y * screen_size[1]) #MAY have to invert y or add y when centering player
         return pixel_cord
