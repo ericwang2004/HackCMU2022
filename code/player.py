@@ -17,8 +17,8 @@ class Player:
         self.clength = camera_length # view looks like a square
         self.cx = self.x - self.clength // 2
         self.cy = self.y - self.clength // 2
-				self.endx = endx
-				self.endy = endy
+        self.endx = endx
+        self.endy = endy
 
         sprite_sheet = asset_manager.retrieve('./asset/aubreySheet.png')
         self.animator = Animator(sprite_sheet, 4, 3, 100)
@@ -33,8 +33,8 @@ class Player:
         
     def update_corner(self):
         # update self.cx and self.cy
-				if self.x == self.endx and self.y == self.endy:
-						return -1
+        if self.y == self.endx and self.x == self.endy:
+            return -1
         self.cx = self.x - self.clength // 2
         self.cy = self.y - self.clength // 2
         return 0
@@ -71,7 +71,7 @@ class Player:
         elif cell_type == 2: # if the cell is magic, teleport the player to the cell linked to this one TODO
             self.x, self.y = self.maze.magic_graph[(newx, newy)]
         # if the cell type is a wall, keep x and y the same since we can't run into a wall
-				return self.update_corner()
+        return self.update_corner()
     def right(self):
         newx = self.x
         newy = self.y

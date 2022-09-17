@@ -11,9 +11,10 @@ import os
 EMPTY = 0 
 WALL = 1
 MAGIC = 2
+END = 3
 
 #WHITE BLACK RED
-COLORS = [(255, 255, 255), (0, 0, 0), (0, 0, 255)]
+COLORS = [(255, 255, 255), (0, 0, 0), (0, 0, 255), (255, 0, 0)]
 MAGIC_CONNECT_COLOR = (100, 10, 200)
 
 class Editor:
@@ -41,7 +42,7 @@ class Editor:
                     if self.map[clamped[1]][clamped[0]] == MAGIC and self.magic_connections.__contains__(clamped):
                         self.magic_connections.pop(clamped)
                         
-                    self.map[clamped[1]][clamped[0]] = (self.map[clamped[1]][clamped[0]] + 1) % 3
+                    self.map[clamped[1]][clamped[0]] = (self.map[clamped[1]][clamped[0]] + 1) % 4
                     
             elif event.button == 3:
                 if self.map[clamped[1]][clamped[0]] != MAGIC:
@@ -105,15 +106,27 @@ class Editor:
           self.draw_arrow_2(display, self.magic_connect_tile, pygame.mouse.get_pos())
                 
     def save(self, display, path):
-        NAMES = ['EMPTY', 'WALL', 'MAGIC']
-        print(self.magic_connections)
+        ASSETS = ['./asset/grass.jpeg', './asset/wood.jpeg', './asset/water.jpeg', './asset/BTS MAN.png']
+        IMAGES = [pygame.image.load(asset).convert_alpha() for asset in ASSETS]
+        #render the map with the correct assets 
+        for y in range(self.rows):
+            for x in range(self.cols):
+                img = pygame.transform.scale(IMAGES[self.map[y][x]], (self.step_x, self.step_y))
+                display.blit(img, (self.step_x * x, self.step_y * y))
+        
         pygame.image.save(display, "map.png")
+        
+        
+        NAMES = ['EMPTY', 'WALL', 'MAGIC']
         with open(path, "w") as f:
             f.write(f'Dimensions:{(self.rows, self.cols)}')
             for y in range(self.rows):
                 for x in range(self.cols):
                     typ = self.map[y][x]
-                    f.write(f"({x}, {y}): {NAMES[typ]}")
+                    if typ == END:
+                        f.write(f"({x}, {y}): EMPTY: END")
+                    else:   
+                         f.write(f"({x}, {y}): {NAMES[typ]}")
                     
                     if typ == MAGIC:
                         if not self.magic_connections.__contains__((x, y)) and not (x, y) in self.magic_connections.values():

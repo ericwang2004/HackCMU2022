@@ -24,11 +24,14 @@ def txtToInput():
     
     adj_list = {}
 
+    endx, endy = -1, -1
     for i in range(1, len(lines)):
         line = lines[i]
         x, y = getTuple(line)
         if 'EMPTY' in line:
             typ = 0
+            if 'END' in line:
+                endx, endy = x, y
         elif 'WALL' in line:
             typ = 1
         elif 'MAGIC' in line:
@@ -40,8 +43,6 @@ def txtToInput():
         input_array[y][x] = typ
 
     f.close()
-    return input_array, adj_list
+    return input_array, adj_list, endx, endy
 
-input, adj = txtToInput()
-print(input)
-print(adj)
+

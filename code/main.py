@@ -5,6 +5,8 @@ import sys
 from camera import Camera
 from Scene import Scene
 import time
+
+from SceneManager import SceneManager
  
 
 #define constants and camera
@@ -21,7 +23,7 @@ pygame.display.set_caption("💀💀")
 pygame.display.flip()
 
 #create the scene
-scene = Scene(camera)
+sceneManager = SceneManager(camera)
 
 #setup pygame
 
@@ -36,7 +38,7 @@ while True:
             sys.exit()
           
         #HANDLE KEY, MOUSE INPUT  
-        scene.input(event)
+        sceneManager.input(event)
     
 
     #FILL COLOR
@@ -46,10 +48,10 @@ while True:
     now = time.time()
     delta = now - after
     after = time.time()
-    scene.update(delta)
+    sceneManager.update(delta)
     
     #RENDER HERE
-    scene.render(displaysurface)
+    sceneManager.render(displaysurface)
     
     pygame.display.update()
     clock.tick(FPS)

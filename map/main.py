@@ -12,7 +12,7 @@ SAVE_PATH = './map.txt'
 
 WIDTH = 500
 HEIGHT = 500
-editor = Editor(500, 500, WIDTH, HEIGHT)
+editor = Editor(20, 20, WIDTH, HEIGHT)
 
 #setup pygame
 pygame.init()
